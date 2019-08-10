@@ -1,14 +1,16 @@
 package com.example.demo.login.domain.repository.jdbc;
 
-import java.util.List;
+import com.example.demo.login.domain.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import com.example.demo.login.domain.model.User;
 import org.springframework.stereotype.Repository;
 
-@Repository("UserDaoJdbcImpl2")
-public class UserDaoJdbcImpl2 extends UserDaoJdbcImpl{
+import java.util.List;
+
+@Repository("UserDaoJdbcImpl3")
+public class UserDaoJdbcImpl3 extends UserDaoJdbcImpl{
 
     @Autowired
     private JdbcTemplate jdbc;
@@ -16,26 +18,26 @@ public class UserDaoJdbcImpl2 extends UserDaoJdbcImpl{
     // ユーザ1件取得
     @Override
     public User selectOne(String userId) {
-         // 1件取得用SQL
+
+        // 1件取得用SQL
         String sql = "SELECT * FROM m_user WHERE user_id = ?";
 
-        // RowMapperの形成
-        UserRowMapper rowMapper = new UserRowMapper();
+        // RowMapperの生成
+        RowMapper<User> rowMapper = new BeanPropertyRowMapper<User>(User.class);
 
         // SQL実行
         return jdbc.queryForObject(sql, rowMapper, userId);
     }
 
     // ユーザ全件取得
-
     @Override
     public List<User> selectMany() {
 
         // M_USERテーブルのデータを全件取得するSQL
         String sql = "SELECT * FROM m_user";
 
-        // RowMapperの形成
-        RowMapper<User> rowMapper = new UserRowMapper();
+        // RowMapperの生成
+        RowMapper<User> rowMapper = new BeanPropertyRowMapper<User>(User.class);
 
         // SQL実行
         return jdbc.query(sql, rowMapper);
