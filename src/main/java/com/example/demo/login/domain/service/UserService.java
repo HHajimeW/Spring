@@ -80,7 +80,7 @@ public class UserService {
     }
 
     // ユーザ一覧をCSV出力する
-    public void userCscOut() throws DataAccessException {
+    public void userCsvOut() throws DataAccessException {
         dao.userCsvOut();
     }
 
