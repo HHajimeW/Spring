@@ -72,7 +72,7 @@ public class UserDaoNamedJdbcImpl implements UserDao {
     @Override
     public User selectOne(String userId) {
         // SQL文
-        String sql = "SELECT * FROM m_user WHERE user_id = userId";
+        String sql = "SELECT * FROM m_user WHERE user_id = :userId";
 
         // パラメータ
         SqlParameterSource params = new MapSqlParameterSource().addValue("userId", userId);
