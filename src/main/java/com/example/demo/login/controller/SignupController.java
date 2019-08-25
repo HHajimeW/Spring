@@ -6,6 +6,7 @@ import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -81,7 +82,32 @@ public class SignupController {
 
     @ExceptionHandler(DataAccessException.class)
     public String dataAccessExceptionHandler(DataAccessException e, Model model) {
-        
+
+        // 例外クラスのメッセージをModelに登録
+        model.addAttribute("error", "内部サーバーエラー（DB）：ExceptionHandler");
+
+        // 例外クラスのメッセージをModelに登録
+        model.addAttribute("message", "SignupContorollerでDataAccessExceptionが発生しました");
+
+        // HTTPのエラーコード（500）をModelに登録
+        model.addAttribute("status", HttpStatus.INTERNAL_SERVER_ERROR);
+
+        return "error";
+    }
+
+    @ExceptionHandler(Exception.class)
+    public String exceptionHandler(Exception e, Model model){
+
+        // 例外クラスのメッセージをModelに登録
+        model.addAttribute("error", "内部サーバーエラー：ExceptionHandler");
+
+        // 例外クラスのメッセージをModelに登録
+        model.addAttribute("message", "SignupControllerでExceptionが発生しました");
+
+        // HTTPのエラーコード（500）をModelに登録
+        model.addAttribute("status", HttpStatus.INTERNAL_SERVER_ERROR);
+
+        return "error";
     }
 
 }
